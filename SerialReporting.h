@@ -9,7 +9,8 @@
 #define stringOf(num)	#num
 
 /**
- * @Description : 
+ * @Description : Variable definition - lower case version of macro name could be used in code
+ * 				  as uint8_t variable of defined function
  */
 #define DOWN_CSR	uint8_t down_csr[3] 	= {0x1b,0x5b,0x42}
 #define UP_CSR		uint8_t up_csr[3] 		= {0x1b,0x5b,0x41}
@@ -40,7 +41,7 @@
 #endif
 
 #if NO_OF_COLUMN >= 3
-#define WIDTH_COLUMN_3		5	//Total no of characters
+#define WIDTH_COLUMN_3		3	//Total no of characters
 #else
 #define WIDTH_COLUMN_3		NULL_WIDTH
 #endif
@@ -66,7 +67,9 @@
 #define GET_WIDTH_COLUMN(no)	(no == 1 ? WIDTH_COLUMN_1 : (no == 2 ? WIDTH_COLUMN_2 : (no == 3 ? WIDTH_COLUMN_3 : \
 		(no == 4 ? WIDTH_COLUMN_4 : (no == 5 ? WIDTH_COLUMN_5 : (no == 6 ? WIDTH_COLUMN_6 : NULL_WIDTH))))))
 
-#define LOCATION_COLUMN_(no)	GET_WIDTH_COLUMN(no-1) + (COMA_LEN * (no)) + 1
+#define LOCATION_COLUMN_(no)	GET_WIDTH_COLUMN(no-1) + GET_WIDTH_COLUMN(no-2) + GET_WIDTH_COLUMN(no-3) + \
+								GET_WIDTH_COLUMN(no-4) + GET_WIDTH_COLUMN(no-5) +(COMA_LEN * (no)) + 1
+//It could be said that LOCATION_COLUMN_ is hard-coded for 6 column
 
 #define TOTAL_WIDTH		WIDTH_COLUMN_1 + WIDTH_COLUMN_2 + WIDTH_COLUMN_3 + WIDTH_COLUMN_4 + WIDTH_COLUMN_5 + WIDTH_COLUMN_6 \
 						+ NO_OF_COMA + CR_LF_LEN
